@@ -12,5 +12,6 @@
 ![image](https://github.com/IndriesAndrei/vuejs-todo-app/assets/24415865/2d3d894a-44d7-4c82-b19c-181af06dc23b)
 
 
+![image](https://github.com/IndriesAndrei/vuejs-todo-app/assets/24415865/48c2a4dc-e9fd-4ca1-9e77-9b91a8877863)
 
 
