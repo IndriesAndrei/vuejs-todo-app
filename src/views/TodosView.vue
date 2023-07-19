@@ -7,6 +7,22 @@ import { uid } from 'uid';
 
 const todoList = ref([]);
 
+// localStorage setup
+const setTodoListLocalStorage = () => {
+  localStorage.setItem('todoList', JSON.stringify(todoList.value));
+}
+
+// retrieve item from localStorage
+const fetchTodoList = () => {
+  const savedTodoList = JSON.parse(localStorage.getItem('todoList'));
+  if (savedTodoList) {
+    todoList.value = savedTodoList;
+  }
+}
+
+// run this function each time app starts
+fetchTodoList();
+
 const createTodo = (todo) => {
   todoList.value.push({
     id: uid(),
@@ -14,22 +30,27 @@ const createTodo = (todo) => {
     isCompleted: null,
     isEditing: null
   });
+  setTodoListLocalStorage();
 }
 
 const toggleTodoComplete = (todoPos) => {
   todoList.value[todoPos].isCompleted = !todoList.value[todoPos].isCompleted;
+  setTodoListLocalStorage();
 }
 
 const toggleEditTodo = (todoPos) => {
   todoList.value[todoPos].isEditing = !todoList.value[todoPos].isEditing;
+  setTodoListLocalStorage();
 }
 
 const updateTodo = (todoVal, todoPos) => {
   todoList.value[todoPos].todo = todoVal;
+  setTodoListLocalStorage();
 }
 
 const deleteTodo = (todoId) => {
   todoList.value = todoList.value.filter((todo) => todo.id !== todoId);
+  setTodoListLocalStorage();
 }
 </script>
 
