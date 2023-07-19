@@ -1,22 +1,39 @@
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { reactive, defineEmits } from 'vue';
+import TodoButton from './TodoButton.vue';
 
+// define the emit
 const emit = defineEmits(['create-todo']);
 
-const todo = ref('');
+// const todoState = ref('');
+const todoState = reactive({
+    todo: '',
+    invalid: null,
+    errMsg: ''
+});
 
-// we will emit/send this value from our component
+// we will emit/send this value from our component and send the input value
 const createTodo = () => {
-    emit('create-todo');
+    todoState.invalid = null;
+    if (todoState.todo !== '') {
+        emit('create-todo', todoState.todo);
+        todoState.todo = '';
+        return;
+    }
+    todoState.invalid = true;
+    todoState.errMsg = "Todo value cannot be empty";
 };
 </script>
 
 <template>
-    <div class="input-wrap">
-        <input type="text" v-model="todo">
-        <button @click="createTodo()">Create</button>
+    <div class="input-wrap" :class="{ 'input-err' : todoState.invalid }">
+        <input type="text" v-model="todoState.todo">
+        <TodoButton @click="createTodo()" />
+            <!-- here we can see what the <slot></slot> contains -->
     </div>
-    <p>{{ todo }}</p>
+    <!-- Show if any error message (we can use v-if or v-show) -->
+    <!-- <p v-if="todoState.invalid" class="err-msg">{{ todoState.errMsg }}</p> -->
+    <p v-show="todoState.invalid" class="err-msg">{{ todoState.errMsg }}</p>
 </template>
 
 <style lang="scss" scoped>
@@ -24,6 +41,10 @@ const createTodo = () => {
   display: flex;
   transition: 250ms ease;
   border: 2px solid #41b080;
+
+  &.input-err {
+    border-color: red;
+  }
 
   &:focus-within {
     box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1),
@@ -44,5 +65,12 @@ const createTodo = () => {
     padding: 8px 16px;
     border: none;
   }
+}
+
+.err-msg {
+    margin-top: 6px;
+    font-size: 12px;
+    text-align: center;
+    color: red;
 }
 </style>
