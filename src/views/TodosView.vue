@@ -73,7 +73,7 @@ const deleteTodo = (todoId) => {
     <TodoCreator @create-todo="createTodo" />
     <ul class="todo-list" v-if="todoList.length > 0">
       <!-- we are passing todo and index as props to the TodoItem component 
-      and we are listening to the emited custom event: toggle-complete -->
+      and we are listening to the emit custom event: toggle-complete -->
       <TodoItem 
         v-for="(todo, index) in todoList" 
         :todo="todo" :index="index" 

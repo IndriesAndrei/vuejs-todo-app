@@ -1,11 +1,17 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import TodoHeader from './components/TodoHeader.vue'
+import Register from './components/Register.vue'
+import AuthenticationUser from './components/AuthenticationUser.vue';
+import UserList from './components/UserList.vue';
 </script>
 
 <template>
   <TodoHeader />
   <RouterView />
+  <Register />
+  <AuthenticationUser />
+  <UserList />
 </template>
 
 <style lang="scss">
